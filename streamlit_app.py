@@ -6,12 +6,12 @@ import streamlit as st
 
 st.set_page_config(page_title="Databricks Model Serving Client", layout="wide")
 
-st.title("🚀 Databricks Model Serving — Streamlit Client (Hardcoded)")
+st.title("🚀 Databricks Model Serving — Streamlit Client ")
 
 with st.expander("ℹ️ About", expanded=False):
     st.markdown(
         """
-        This app calls a **Databricks Model Serving Endpoint** using a **hardcoded** host, token, and endpoint name.
+        This app calls a **Databricks Model Serving Endpoint** using a  host, token, and endpoint name.
         - Payload format defaults to **`dataframe_split`** (PyFunc-friendly).
         - Use the **Raw JSON** tab for custom payloads.
         """
