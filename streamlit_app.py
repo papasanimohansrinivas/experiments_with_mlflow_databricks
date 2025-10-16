@@ -18,14 +18,13 @@ with st.expander("ℹ️ About", expanded=False):
     )
 
 # ======= HARD-CODED CONFIG =======
-DATABRICKS_HOST    = "https://dbc-6d3b551e-de77.cloud.databricks.com"   # <- change if needed
-DATABRICKS_TOKEN   = "dapi24ee8bd1cb5f03c2bfe11ef801c3c00a"                        # <- paste your PAT or use st.secrets/env
+DATABRICKS_HOST    = "https://dbc-6d3b551e-de77.cloud.databricks.com"   # <- change if needed                       # <- paste your PAT or use st.secrets/env
 SERVING_ENDPOINT   = "mosaicbert-mlm-endpoint-11"                        # <- change if needed
 # =================================
 
 # Optional overrides via secrets or env (no UI inputs involved)
 DATABRICKS_HOST  = st.secrets.get("databricks", {}).get("host", os.getenv("DATABRICKS_HOST", DATABRICKS_HOST))
-DATABRICKS_TOKEN = st.secrets.get("databricks", {}).get("token", os.getenv("DATABRICKS_TOKEN", DATABRICKS_TOKEN))
+required_variable = "dapi27e82d1b0390b4e22f930bf9571c2561"
 SERVING_ENDPOINT = st.secrets.get("serving", {}).get("endpoint", os.getenv("DATABRICKS_ENDPOINT", SERVING_ENDPOINT))
 
 # --- Helpers ------------------------------------------------------------------
@@ -53,10 +52,10 @@ with cc1:
 with cc2:
     st.metric("Endpoint", SERVING_ENDPOINT)
 with cc3:
-    masked = (DATABRICKS_TOKEN[:6] + "…" + DATABRICKS_TOKEN[-4:]) if len(DATABRICKS_TOKEN) >= 12 else "masked"
+    masked = (required_variable[:6] + "…" + required_variable[-4:]) if len(required_variable) >= 12 else "masked"
     st.metric("Token", masked)
 
-if not DATABRICKS_HOST or not DATABRICKS_TOKEN or not SERVING_ENDPOINT:
+if not DATABRICKS_HOST or not required_variable or not SERVING_ENDPOINT:
     st.error("Hardcoded configuration is incomplete. Please set host, token, and endpoint in the source code (or via st.secrets / env).")
     st.stop()
 
@@ -78,7 +77,7 @@ with tab_text:
                 df = pd.DataFrame([{df_col_name: text_input}])
                 payload = build_dataframe_split_payload(df)
                 with st.spinner("Calling endpoint..."):
-                    resp = call_endpoint(DATABRICKS_HOST, DATABRICKS_TOKEN, SERVING_ENDPOINT, payload)
+                    resp = call_endpoint(DATABRICKS_HOST, required_variable, SERVING_ENDPOINT, payload)
                 if resp.status_code == 200:
                     st.success("Success")
                     try:
@@ -117,7 +116,7 @@ with tab_csv:
                 df_send = df_csv[[batch_col]].head(int(limit_rows)).copy()
                 payload = build_dataframe_split_payload(df_send)
                 with st.spinner(f"Calling endpoint for {len(df_send)} rows..."):
-                    resp = call_endpoint(DATABRICKS_HOST, DATABRICKS_TOKEN, SERVING_ENDPOINT, payload)
+                    resp = call_endpoint(DATABRICKS_HOST, required_variable, SERVING_ENDPOINT, payload)
                 if resp.status_code == 200:
                     st.success("Success")
                     try:
@@ -149,7 +148,7 @@ with tab_json:
         if payload is not None:
             try:
                 with st.spinner("Calling endpoint..."):
-                    resp = call_endpoint(DATABRICKS_HOST, DATABRICKS_TOKEN, SERVING_ENDPOINT, payload)
+                    resp = call_endpoint(DATABRICKS_HOST, required_variable, SERVING_ENDPOINT, payload)
                 if resp.status_code == 200:
                     st.success("Success")
                     try:
