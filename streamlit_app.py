@@ -4,6 +4,7 @@ import pandas as pd
 import requests
 import streamlit as st
 
+
 st.set_page_config(page_title="Databricks Model Serving Client", layout="wide")
 
 st.title("🚀 Databricks Model Serving — Streamlit Client ")
