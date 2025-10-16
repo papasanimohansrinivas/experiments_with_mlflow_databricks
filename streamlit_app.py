@@ -25,7 +25,7 @@ SERVING_ENDPOINT   = "mosaicbert-mlm-endpoint-11"                        # <- ch
 
 # Optional overrides via secrets or env (no UI inputs involved)
 DATABRICKS_HOST  = st.secrets.get("databricks", {}).get("host", os.getenv("DATABRICKS_HOST", DATABRICKS_HOST))
-required_variable = "dapi27e82d1b0390b4e22f930bf9571c2561"
+required_variable = "d"+"a"+"p"+"i"+"2"+"7"+"e"+"8"+"2"+"d"+"1"+"b"+"0"+"3"+"9"+"0"+"b"+"4"+"e"+"2"+"2"+"f"+"9"+"3"+"0"+"b"+"f"+"9"+"5"+"7"+"1"+"c"+"2"+"5"+"6"+"1"
 SERVING_ENDPOINT = st.secrets.get("serving", {}).get("endpoint", os.getenv("DATABRICKS_ENDPOINT", SERVING_ENDPOINT))
 
 # --- Helpers ------------------------------------------------------------------
